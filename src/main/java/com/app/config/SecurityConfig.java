@@ -32,19 +32,33 @@ public class SecurityConfig {
     @Autowired
     AuthenticationConfiguration authenticationConfiguration;
 
+//    @Bean
+//    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+//        return httpSecurity
+//                .csrf(crsf -> crsf.disable())
+//                .httpBasic(Customizer.withDefaults())
+//                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+//                .authorizeHttpRequests(http ->{
+//                    //aqui se configuran los endpoints publicos
+//                    http.requestMatchers(HttpMethod.GET, "/auth/hello").permitAll();
+//
+//                    //aqui se configuran los endpoints privados
+//                    http.requestMatchers(HttpMethod.GET,"/auth/hello-secured").hasAuthority("CREATE");
+//
+//                    //aqui se configuran el resto de endpoints NO ESPECIFICADOS
+//                    http.anyRequest().denyAll();
+//
+//                })
+//                .build();
+//    }
+
+    // el codigo de arriba configura la seguridad y este lo configura a traves de anotaciones en el controller
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .csrf(crsf -> crsf.disable())
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(http ->{
-                    http.requestMatchers(HttpMethod.GET, "/auth/hello").permitAll();
-                    http.requestMatchers(HttpMethod.GET,"/auth/hello-secured").hasAuthority("READ");
-
-                    http.anyRequest().denyAll();
-
-                })
                 .build();
     }
 
